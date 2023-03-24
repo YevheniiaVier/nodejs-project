@@ -1,12 +1,12 @@
 const { Contact } = require("../../models/contact");
 
-const { IdError } = require("../../errorHandlers/");
+const { IdError, MissingFieldsError } = require("../../errorHandlers/");
 
-const updateContact = async (req, res) => {
-  if (!req.body) {
-    const error = new Error(`Missing fields`);
-    error.status = 400;
-    throw error;
+const toggleFavorite = async (req, res) => {
+  console.log(req.body);
+
+  if (Object.keys(req.body).length === 0) {
+    throw new MissingFieldsError(400, "missing field favorite");
   }
   const { contactId } = req.params;
   const contact = await Contact.findByIdAndUpdate(contactId, req.body, {
@@ -24,4 +24,4 @@ const updateContact = async (req, res) => {
     },
   });
 };
-module.exports = updateContact;
+module.exports = toggleFavorite;
