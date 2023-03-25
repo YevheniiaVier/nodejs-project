@@ -1,13 +1,10 @@
-const { Contact } = require("../../models/contact");
+const { Contact } = require("../../models");
 
 const { RequestError } = require("../../errorHandlers");
 
 const getContactById = async (req, res) => {
   const { contactId } = req.params;
-  console.log(contactId, "contactID in getbyid");
-
   const contact = await Contact.findById(contactId);
-  console.log(contact, "contact in getbyid");
   if (!contact) {
     throw new RequestError(404, `Contact with id: ${contactId} is not found`);
   }
