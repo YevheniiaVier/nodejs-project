@@ -1,10 +1,8 @@
 const { Contact } = require("../../models/contact");
 
-const { IdError, MissingFieldsError } = require("../../errorHandlers/");
+const { RequestError, MissingFieldsError } = require("../../errorHandlers/");
 
 const toggleFavorite = async (req, res) => {
-  console.log(req.body);
-
   if (Object.keys(req.body).length === 0) {
     throw new MissingFieldsError(400, "missing field favorite");
   }
@@ -14,7 +12,7 @@ const toggleFavorite = async (req, res) => {
   });
 
   if (!contact) {
-    throw new IdError(contactId);
+    throw new RequestError(404, `Contact with id: ${contactId} is not found`);
   }
   res.json({
     status: "success",
