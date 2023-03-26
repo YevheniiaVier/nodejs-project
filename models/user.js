@@ -1,5 +1,4 @@
 const { Schema, model } = require("mongoose");
-// const { handleValidationErrors } = require("../errorHandlers");
 const Joi = require("joi");
 const bcrypt = require("bcryptjs");
 const userSchema = Schema(
@@ -23,7 +22,10 @@ const userSchema = Schema(
       enum: ["starter", "pro", "business"],
       default: "starter",
     },
-    token: String,
+    token: {
+      type: String,
+      default: null,
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -47,8 +49,6 @@ const registerJoiSchema = Joi.object({
     .max(12)
     .required()
     .messages({ "any.required": "Missing required field: password" }),
-  // subscription: Joi.string()
-  // .enum: []
 });
 
 const loginJoiSchema = Joi.object({
@@ -60,11 +60,7 @@ const loginJoiSchema = Joi.object({
     .max(12)
     .required()
     .messages({ "any.required": "Missing required field: password" }),
-  // subscription: Joi.string()
-  // .enum: []
 });
-
-// userSchema.post("save", handleValidationErrors);
 
 const User = model("user", userSchema);
 

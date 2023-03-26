@@ -4,8 +4,6 @@ const { auth, ctrlWrapper } = require("../../middlewares");
 
 const { users: ctrl } = require("../../controllers");
 
-// const { registerJoiSchema, loginJoiSchema } = require("../../models/user");
-
 const router = express.Router();
 
 router.get("/current", auth, ctrlWrapper(ctrl.getCurrent));
