@@ -14,7 +14,6 @@ const router = express.Router();
 
 router.post(
   "/register",
-  // subscription,
   validation(registerJoiSchema),
   ctrlWrapper(ctrl.register)
 );
