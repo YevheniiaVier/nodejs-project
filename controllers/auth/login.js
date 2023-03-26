@@ -1,4 +1,3 @@
-// const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
@@ -8,6 +7,7 @@ const { SECRET_KEY } = process.env;
 
 const login = async (req, res) => {
   const { email, password } = req.body;
+  const { subscription } = req.user;
 
   const user = await User.findOne({ email });
   if (!user || !user.comparePassword(password)) {
@@ -23,6 +23,10 @@ const login = async (req, res) => {
     code: 200,
     data: {
       token,
+      user: {
+        email,
+        subscription,
+      },
     },
   });
 };
