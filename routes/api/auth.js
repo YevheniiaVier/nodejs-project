@@ -8,7 +8,7 @@ const {
 } = require("../../middlewares");
 const { auth: ctrl } = require("../../controllers");
 
-const { registerJoiSchema, loginJoiSchema } = require("../../models/user");
+const { registerJoiSchema, loginJoiSchema } = require("../../utils/validation");
 
 const router = express.Router();
 

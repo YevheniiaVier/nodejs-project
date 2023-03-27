@@ -8,32 +8,27 @@ const {
   isValidId,
   auth,
 } = require("../../middlewares");
-const { schemas } = require("../../models/contact");
+const { addSchema, toggleFavoriteSchema } = require("../../utils/validation");
 const { contacts: ctrl } = require("../../controllers");
 
 router.get("/", auth, ctrlWrapper(ctrl.listContacts));
 
 router.get("/:contactId", auth, isValidId, ctrlWrapper(ctrl.getContactById));
 
-router.post(
-  "/",
-  auth,
-  validation(schemas.addSchema),
-  ctrlWrapper(ctrl.addContact)
-);
+router.post("/", auth, validation(addSchema), ctrlWrapper(ctrl.addContact));
 
 router.delete("/:contactId", isValidId, ctrlWrapper(ctrl.removeContact));
 
 router.put(
   "/:contactId",
   isValidId,
-  validation(schemas.addSchema),
+  validation(addSchema),
   ctrlWrapper(ctrl.updateContact)
 );
 router.patch(
   "/:contactId/favorite",
   isValidId,
-  validation(schemas.toggleFavoriteSchema),
+  validation(toggleFavoriteSchema),
   ctrlWrapper(ctrl.toggleFavorite)
 );
 

@@ -4,7 +4,7 @@ const { auth, ctrlWrapper, validation } = require("../../middlewares");
 
 const { users: ctrl } = require("../../controllers");
 
-const { toggleSubscriptionSchema } = require("../../models/user");
+const { toggleSubscriptionSchema } = require("../../utils/validation");
 
 const router = express.Router();
 
