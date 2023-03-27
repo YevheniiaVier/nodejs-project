@@ -1,8 +1,8 @@
-const IdError = require("./idError");
+const RequestError = require("./RequestError");
 const handleValidationErrors = require("./handleValidationErrors");
-const MissingFieldsError = require("./missingFieldsError");
+
 module.exports = {
-  IdError,
   handleValidationErrors,
-  MissingFieldsError,
+
+  RequestError,
 };

@@ -1,6 +1,6 @@
-const { Contact } = require("../../models/contact");
+const { Contact } = require("../../models");
 
-const { IdError } = require("../../errorHandlers/");
+const { RequestError } = require("../../errorHandlers/");
 
 const updateContact = async (req, res) => {
   if (!req.body) {
@@ -14,7 +14,7 @@ const updateContact = async (req, res) => {
   });
 
   if (!contact) {
-    throw new IdError(contactId);
+    throw new RequestError(404, `Contact with id: ${contactId} is not found`);
   }
   res.json({
     status: "success",

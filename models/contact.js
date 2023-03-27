@@ -24,6 +24,11 @@ const contactSchema = Schema(
       type: Boolean,
       default: false,
     },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -48,8 +53,9 @@ const addSchema = Joi.object({
     })
     .required()
     .messages({ "any.required": "Missing required field: Email" }),
-  favorite: myCustomJoi.boolean(),
+  favorite: Joi.boolean(),
 });
+
 const toggleFavoriteSchema = Joi.object({
   favorite: myCustomJoi.boolean(),
 });
