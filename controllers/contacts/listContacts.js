@@ -5,10 +5,11 @@ const listContacts = async (req, res) => {
   const { page = 1, limit = 10, favorite } = req.query;
 
   const skip = (page - 1) * limit;
-  const filter =
-    req.query.favorite === undefined
-      ? { owner: _id }
-      : { owner: _id, favorite };
+
+  const filter = { owner: _id };
+  if (req.query.favorite !== undefined) {
+    Object.assign(filter, { favorite });
+  }
 
   const contacts = await Contact.find(filter, "name email phone favorite", {
     skip,
