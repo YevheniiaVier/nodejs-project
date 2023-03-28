@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require("fs/promises");
 const Jimp = require("jimp");
-const { User } = require("../../models");
+const { Contact } = require("../../models");
 const { RequestError } = require("../../errorHandlers/");
 
 const avatarsDir = path.join(__dirname, "../../", "public", "avatars");
@@ -10,7 +10,8 @@ const AVATAR_SIZE = 250;
 
 const updateAvatar = async (req, res) => {
   const { path: tempUpload, originalname } = req.file;
-  const { _id: id } = req.user;
+  console.log(req.params);
+  const { contactId: id } = req.params;
   const avatarName = `${id}_${originalname}`;
   try {
     const resultUpload = path.join(avatarsDir, avatarName);
@@ -21,7 +22,7 @@ const updateAvatar = async (req, res) => {
 
     const avatarURL = path.join("public", "avatars", avatarName);
 
-    await User.findByIdAndUpdate(req.user._id, { avatarURL });
+    await Contact.findByIdAndUpdate(req.params.contactId, { avatarURL });
     res.json({
       status: "success",
       code: 200,

@@ -6,6 +6,7 @@ const {
   ctrlWrapper,
   isValidId,
   auth,
+  upload,
 } = require("../../middlewares");
 
 const { addSchema, toggleFavoriteSchema } = require("../../utils/validation");
@@ -30,6 +31,12 @@ router.patch(
   isValidId,
   validation(toggleFavoriteSchema),
   ctrlWrapper(ctrl.toggleFavorite)
+);
+router.patch(
+  "/:contactId/avatar",
+  auth,
+  upload.single("avatar"),
+  ctrlWrapper(ctrl.updateAvatar)
 );
 
 module.exports = router;

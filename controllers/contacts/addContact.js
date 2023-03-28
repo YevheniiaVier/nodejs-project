@@ -1,5 +1,6 @@
 const { Contact } = require("../../models");
 const { RequestError } = require("../../errorHandlers");
+const gravatar = require("gravatar");
 
 const addContact = async (req, res) => {
   const { _id } = req.user;
@@ -13,8 +14,8 @@ const addContact = async (req, res) => {
   if (contactPhone) {
     throw new RequestError(409, `Contact with phone:${phone} already exists`);
   }
-
-  const contact = await Contact.create({ ...req.body, owner: _id });
+  const avatarURL = gravatar.url(email);
+  const contact = await Contact.create({ ...req.body, avatarURL, owner: _id });
 
   res.status(201).json({
     status: "success",
