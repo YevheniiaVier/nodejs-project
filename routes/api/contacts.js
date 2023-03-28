@@ -1,13 +1,13 @@
 const express = require("express");
 
 const router = express.Router();
-
 const {
   validation,
   ctrlWrapper,
   isValidId,
   auth,
 } = require("../../middlewares");
+
 const { addSchema, toggleFavoriteSchema } = require("../../utils/validation");
 const { contacts: ctrl } = require("../../controllers");
 
