@@ -18,6 +18,8 @@ router.post(
   ctrlWrapper(ctrl.register)
 );
 
+router.get("/verify/:verificationToken", ctrlWrapper(ctrl.verifyEmail));
+
 router.post(
   "/login",
   subscription,

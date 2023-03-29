@@ -10,7 +10,6 @@ const AVATAR_SIZE = 250;
 
 const updateAvatar = async (req, res) => {
   const { path: tempUpload, originalname } = req.file;
-  console.log(req.params);
   const { contactId: id } = req.params;
   const avatarName = `${id}_${originalname}`;
   try {
