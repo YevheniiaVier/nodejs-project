@@ -6,13 +6,15 @@ const listContacts = async (req, res) => {
 
   const skip = (page - 1) * limit;
 
-  const contacts = await Contact.find(
-    req.query.favorite === undefined
-      ? { owner: _id }
-      : { owner: _id, favorite },
-    "name email phone favorite",
-    { skip, limit: Number(limit) }
-  ).populate("owner", "_id name email");
+  const filter = { owner: _id };
+  if (req.query.favorite !== undefined) {
+    Object.assign(filter, { favorite });
+  }
+
+  const contacts = await Contact.find(filter, "name email phone favorite", {
+    skip,
+    limit: Number(limit),
+  }).populate("owner", "_id name email");
 
   res.json({
     status: "success",

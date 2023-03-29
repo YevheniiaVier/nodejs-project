@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const Joi = require("joi");
+
 const bcrypt = require("bcryptjs");
 const userSchema = Schema(
   {
@@ -26,6 +26,10 @@ const userSchema = Schema(
       type: String,
       default: null,
     },
+    avatarURL: {
+      type: String,
+      required: true,
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -34,42 +38,8 @@ userSchema.methods.comparePassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
 
-const registerJoiSchema = Joi.object({
-  name: Joi.string()
-    .min(3)
-    .max(12)
-    .required()
-    .messages({ "any.required": "Missing required field: Name" }),
-  email: Joi.string()
-
-    .required()
-    .messages({ "any.required": "Missing required field: Email" }),
-  password: Joi.string()
-    .min(6)
-    .max(12)
-    .required()
-    .messages({ "any.required": "Missing required field: password" }),
-  subscription: Joi.string(),
-});
-
-const loginJoiSchema = Joi.object({
-  email: Joi.string()
-    .required()
-    .messages({ "any.required": "Missing required field: Email" }),
-  password: Joi.string()
-    .min(6)
-    .max(12)
-    .required()
-    .messages({ "any.required": "Missing required field: password" }),
-});
-const toggleSubscriptionSchema = Joi.object({
-  subscription: Joi.string().required().valid("starter", "pro", "business"),
-});
 const User = model("user", userSchema);
 
 module.exports = {
   User,
-  registerJoiSchema,
-  loginJoiSchema,
-  toggleSubscriptionSchema,
 };

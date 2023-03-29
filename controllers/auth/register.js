@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs");
+const gravatar = require("gravatar");
 
 const { User } = require("../../models");
 const { RequestError } = require("../../errorHandlers");
@@ -12,12 +13,13 @@ const register = async (req, res) => {
   }
 
   const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-
+  const avatarURL = gravatar.url(email);
   await User.create({
     name,
     email,
     password: hashPassword,
     subscription,
+    avatarURL,
   });
   res.status(201).json({
     status: "success",
@@ -27,6 +29,7 @@ const register = async (req, res) => {
         email,
         subscription,
         name,
+        avatarURL,
       },
     },
   });
