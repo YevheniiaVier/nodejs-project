@@ -28,12 +28,23 @@ const loginJoiSchema = Joi.object({
     .required()
     .messages({ "any.required": "Missing required field: password" }),
 });
+
 const toggleSubscriptionSchema = Joi.object({
   subscription: Joi.string().required().valid("starter", "pro", "business"),
+});
+
+const verifyEmailSchema = Joi.object({
+  email: Joi.string()
+    .required()
+    .email({
+      tlds: { allow: ["com", "net"] },
+    })
+    .messages({ "any.required": "Missing required field: Email" }),
 });
 
 module.exports = {
   registerJoiSchema,
   loginJoiSchema,
   toggleSubscriptionSchema,
+  verifyEmailSchema,
 };

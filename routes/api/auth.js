@@ -8,7 +8,11 @@ const {
 } = require("../../middlewares");
 const { auth: ctrl } = require("../../controllers");
 
-const { registerJoiSchema, loginJoiSchema } = require("../../utils/validation");
+const {
+  registerJoiSchema,
+  loginJoiSchema,
+  verifyEmailSchema,
+} = require("../../utils/validation");
 
 const router = express.Router();
 
@@ -19,6 +23,12 @@ router.post(
 );
 
 router.get("/verify/:verificationToken", ctrlWrapper(ctrl.verifyEmail));
+
+router.post(
+  "/verify",
+  validation(verifyEmailSchema),
+  ctrlWrapper(ctrl.resendEmail)
+);
 
 router.post(
   "/login",

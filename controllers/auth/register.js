@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const gravatar = require("gravatar");
-const { nanoid } = require("nanoid");
+
+const { randomUUID } = require("crypto");
 
 const sendEmail = require("../../utils/sendEmail");
 
@@ -9,15 +10,13 @@ const { RequestError } = require("../../errorHandlers");
 
 const register = async (req, res) => {
   const { name, email, password, subscription = "starter" } = req.body;
-
   const user = await User.findOne({ email });
   if (user) {
     throw new RequestError(409, `User with email:${email} already exists`);
   }
-
   const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
   const avatarURL = gravatar.url(email);
-  const verificationToken = nanoid();
+  const verificationToken = randomUUID();
   await User.create({
     name,
     email,
