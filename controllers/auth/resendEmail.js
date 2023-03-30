@@ -4,12 +4,17 @@ const sendEmail = require("../../utils/sendEmail");
 
 const resendEmail = async (req, res) => {
   const { email } = req.body;
+  if (!email) {
+    res.status(400).json({
+      message: "missing required field email",
+    });
+  }
   const user = await User.findOne({ email });
   if (!user) {
     throw new RequestError(404, "Not found");
   }
   if (user.verify) {
-    throw new RequestError(400, "User is already verified");
+    throw new RequestError(400, "Verification has already been passed");
   }
   const mail = {
     to: email,
@@ -18,7 +23,7 @@ const resendEmail = async (req, res) => {
   };
   await sendEmail(mail);
   res.json({
-    message: "Email for verification is resent",
+    message: "Verification email sent",
   });
 };
 
