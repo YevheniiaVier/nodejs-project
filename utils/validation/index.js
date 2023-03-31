@@ -2,6 +2,7 @@ const {
   registerJoiSchema,
   loginJoiSchema,
   toggleSubscriptionSchema,
+  verifyEmailSchema,
 } = require("./userValidationSchemas");
 
 const {
@@ -15,4 +16,5 @@ module.exports = {
   toggleSubscriptionSchema,
   addSchema,
   toggleFavoriteSchema,
+  verifyEmailSchema,
 };
